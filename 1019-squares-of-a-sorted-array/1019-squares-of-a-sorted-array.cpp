@@ -1,14 +1,12 @@
 class Solution {
 public:
-    vector<int> sortedSquares(vector<int>& nums) {
-       priority_queue<int, vector<int>, greater<int> > q;
-       for(auto x:nums)q.push(x*x);
-       int i=0;
-       while(!q.empty())
-       {
-           nums[i++]=q.top();
-           q.pop();
-       }
-       return nums;
+    vector<int> sortedSquares(vector<int>& A) {
+        vector<int> res(A.size());
+        int l = 0, r = A.size() - 1;
+        for (int k = A.size() - 1; k >= 0; k--) {
+            if (abs(A[r]) > abs(A[l])) res[k] = A[r] * A[r--];
+            else res[k] = A[l] * A[l++];
+        }
+        return res;
     }
 };
