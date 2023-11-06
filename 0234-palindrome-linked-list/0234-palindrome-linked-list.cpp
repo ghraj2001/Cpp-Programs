@@ -12,25 +12,50 @@ class Solution {
 public:
     bool isPalindrome(ListNode* head) 
     {
-        stack <int> s;
-        ListNode* temp=head;
-        ListNode* temp1=head;
-        //pushing elements into stack so that they can be brought out in reverse order
-        while(temp!=NULL)
+        if(head==NULL || head->next==NULL)return true;
+        ListNode *t1=head;
+       ListNode* slow=head;
+       ListNode* fast=head;
+        while(fast!=NULL && fast->next!=NULL)
         {
-            s.push(temp->val);
-            temp=temp->next;
+            slow=slow->next;
+            fast=fast->next->next;
         }
-        //comparing stack with linked list elements
-        while(temp1!=NULL)
+        ListNode* prev=NULL;
+        ListNode* cur=slow;
+        while(cur->next!=NULL)
         {
-           int k=temp1->val;
-           // cout<<"k:"<<k<<"  stack top:"<<s.top()<<endl;
-            if(k!=s.top())
-                return false;
-            s.pop();
-            temp1=temp1->next;
+            ListNode* temp=cur->next;
+            cur->next=prev;
+            prev=cur;
+            cur=temp;
         }
-        return true;
+        cur->next=prev;
+        //  while(head!=NULL)
+        // {
+        //     cout<<head->val;
+        //     head=head->next;
+        // }
+        ListNode* t2=cur;
+        // while(t1!=slow)
+        // {
+        //     cout<<t1->val<<" : ";
+        //     t1=t1->next;
+        // }
+        // cout<<t2->val<<endl;
+        // while(t2!=NULL)
+        // {
+        //     cout<<t2->val;
+        //     t2=t2->next;
+        // }
+        while(t2!=NULL && t1!=slow && t1->val==t2->val)
+        {
+            cout<<t1->val<<" "<<t2->val<<endl;
+            t1=t1->next;
+            t2=t2->next;
+        }
+        return t2==NULL or t1==slow;
+        // return false;
+
     }
 };
